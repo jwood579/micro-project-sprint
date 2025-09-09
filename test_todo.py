@@ -7,8 +7,11 @@ todo_script = os.path.join(os.path.dirname(__file__), 'todo.py')
 todo_json = os.path.join(os.path.dirname(__file__), 'todo.json')
 
 def run_cmd(args):
-    result = subprocess.run([sys.executable, todo_script] + args, capture_output=True, text=True, encoding='utf-8')
-    return result.stdout.strip(), result.stderr.strip(), result.returncode
+    proc = subprocess.Popen([sys.executable, todo_script] + args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    out, err = proc.communicate()
+    if err:
+        print('STDERR:', err)
+    return out.strip(), err.strip(), proc.returncode
 
 def reset_todo():
     if os.path.exists(todo_json):

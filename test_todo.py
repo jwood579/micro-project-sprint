@@ -37,8 +37,9 @@ def test_past_due_red():
     out, err, code = run_cmd(['list'])
     print('DEBUG OUTPUT:', repr(out))
     # Check for ANSI red code and task name
-    assert '\033[91m' in out or '\x1b[91m' in out
-    assert 'Past due task' in out
+    color_found = any(code in out for code in ['\033[91m', '\x1b[91m', '\u001b[91m', '\u001B[91m'])
+    task_found = 'Past due task' in out
+    assert color_found and task_found, f"Expected color code and task name in output, got: {repr(out)}"
     print('test_past_due_red passed')
 
 if __name__ == '__main__':

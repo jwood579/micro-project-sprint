@@ -66,9 +66,7 @@ def mark_done(index):
         print("Invalid task number.")
 
 def main():
-    # Debug: print parsed command
-    import sys
-    print(f'DEBUG: sys.argv={sys.argv}')
+    # ...existing code...
     parser = argparse.ArgumentParser(description='Simple CLI To-Do List')
     subparsers = parser.add_subparsers(dest='command')
 

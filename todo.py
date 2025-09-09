@@ -31,7 +31,7 @@ def list_tasks():
     else:
         from datetime import datetime
         for i, t in enumerate(tasks, 1):
-            status = '✔' if t['done'] else '✗'
+            status = 'X' if t['done'] else ' '
             due = t.get('due')
             due_str = f" (Due: {due})" if due else ''
             is_past_due = False

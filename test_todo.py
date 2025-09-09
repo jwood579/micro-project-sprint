@@ -35,8 +35,10 @@ def test_past_due_red():
     reset_todo()
     run_cmd(['add', 'Past due task', '--due', '2020-01-01'])
     out, err, code = run_cmd(['list'])
+    print('DEBUG OUTPUT:', repr(out))
     # Check for ANSI red code and task name
-    assert '\033[91m' in out and 'Past due task' in out
+    assert '\033[91m' in out or '\x1b[91m' in out
+    assert 'Past due task' in out
     print('test_past_due_red passed')
 
 if __name__ == '__main__':

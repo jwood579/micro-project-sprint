@@ -1,12 +1,7 @@
 [
   {
-    "task": "Buy groceries",
+    "task": "Past due task",
     "done": false,
-    "due": "2025-09-07"
-  },
-  {
-    "task": "Take out trashs",
-    "done": false,
-    "due": "2025-09-15"
+    "due": "2020-01-01"
   }
 ]

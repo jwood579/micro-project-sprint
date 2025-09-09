@@ -66,7 +66,9 @@ def mark_done(index):
         print("Invalid task number.")
 
 def main():
-    print('DEBUG: todo.py main() running')
+    # Debug: print parsed command
+    import sys
+    print(f'DEBUG: sys.argv={sys.argv}')
     parser = argparse.ArgumentParser(description='Simple CLI To-Do List')
     subparsers = parser.add_subparsers(dest='command')
 

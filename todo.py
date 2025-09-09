@@ -14,11 +14,14 @@ def save_tasks(tasks):
     with open(TODO_FILE, 'w') as f:
         json.dump(tasks, f, indent=2)
 
-def add_task(task):
+def add_task(task, due=None):
     tasks = load_tasks()
-    tasks.append({'task': task, 'done': False})
+    tasks.append({'task': task, 'done': False, 'due': due})
     save_tasks(tasks)
-    print(f"Added: {task}")
+    if due:
+        print(f"Added: {task} (Due: {due})")
+    else:
+        print(f"Added: {task}")
 
 def list_tasks():
     tasks = load_tasks()
@@ -27,7 +30,8 @@ def list_tasks():
         return
     for i, t in enumerate(tasks, 1):
         status = '✔' if t['done'] else '✗'
-        print(f"{i}. [{status}] {t['task']}")
+        due = f" (Due: {t['due']})" if t.get('due') else ''
+        print(f"{i}. [{status}] {t['task']}{due}")
 
 def remove_task(index):
     tasks = load_tasks()
@@ -53,6 +57,7 @@ def main():
 
     add_parser = subparsers.add_parser('add', help='Add a new task')
     add_parser.add_argument('task', type=str, help='Task description')
+    add_parser.add_argument('--due', type=str, help='Due date (e.g. 2025-09-10)', default=None)
 
     list_parser = subparsers.add_parser('list', help='List all tasks')
 
@@ -65,7 +70,7 @@ def main():
     args = parser.parse_args()
 
     if args.command == 'add':
-        add_task(args.task)
+        add_task(args.task, args.due)
     elif args.command == 'list':
         list_tasks()
     elif args.command == 'remove':

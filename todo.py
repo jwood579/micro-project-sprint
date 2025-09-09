@@ -10,7 +10,7 @@ def load_tasks():
     with open(TODO_FILE, 'r') as f:
         return json.load(f)
 
-def save_task(tasks):
+def save_tasks(tasks):
     with open(TODO_FILE, 'w') as f:
         json.dump(tasks, f, indent=2)
 
@@ -18,7 +18,7 @@ def add_task(task):
     tasks = load_tasks()
     tasks.append({'task': task, 'done': False})
     save_tasks(tasks)
-    print(f"Added: {task")
+    print(f"Added: {task}")
 
 def list_tasks():
     tasks = load_tasks()

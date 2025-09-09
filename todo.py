@@ -28,10 +28,22 @@ def list_tasks():
     if not tasks:
         print("No tasks found.")
         return
+    from datetime import datetime
     for i, t in enumerate(tasks, 1):
         status = '✔' if t['done'] else '✗'
-        due = f" (Due: {t['due']})" if t.get('due') else ''
-        print(f"{i}. [{status}] {t['task']}{due}")
+        due = t.get('due')
+        due_str = f" (Due: {due})" if due else ''
+        is_past_due = False
+        if due and not t['done']:
+            try:
+                due_date = datetime.strptime(due, "%Y-%m-%d")
+                if due_date.date() < datetime.now().date():
+                    is_past_due = True
+            except Exception:
+                pass
+        color_start = '\033[91m' if is_past_due else ''
+        color_end = '\033[0m' if is_past_due else ''
+        print(f"{color_start}{i}. [{status}] {t['task']}{due_str}{color_end}")
 
 def remove_task(index):
     tasks = load_tasks()
